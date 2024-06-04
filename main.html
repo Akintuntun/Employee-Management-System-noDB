@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Management System</title>
+    <link rel="stylesheet" href="/css/styleMain.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Add New <span style="color: #81ce9c">Employee</span></h2>
+        <form id="addEmployeeForm" onsubmit="return addEmployee()">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required /><br /><br />
+          <label for="position">Position:</label>
+          <input
+            type="text"
+            id="position"
+            name="position"
+            required
+          /><br /><br />
+          <label for="gender">Gender:</label>
+          <div class="genders">
+            <input type="radio" id="male" name="gender" value="Male" required />
+            <label for="male">Male</label>
+            <input
+              type="radio"
+              id="female"
+              name="gender"
+              value="Female"
+              required
+            />
+            <label for="female">Female</label><br /><br />
+          </div>
+
+          <label for="pay">Pay:</label>
+          <input type="number" id="pay" name="pay" required /><br /><br />
+          <label for="fullTime">Full-Time:</label>
+          <input type="checkbox" id="fullTime" name="fullTime" /><br /><br />
+          <label for="photo">Photo URL:</label>
+          <input type="url" id="photo" name="photo" /><br /><br />
+          <input type="submit" value="Add" style="width: 50%" />
+        </form>
+      </div>
+    </div>
+
+    <div id="updateModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeUpdateModal()">&times;</span>
+        <h2>Update <span style="color: #81ce9c">Employee</span></h2>
+        <form id="updateEmployeeForm" onsubmit="return updateEmployee()">
+          <input type="hidden" id="updateId" name="id" />
+          <label for="updateName">Name:</label>
+          <input type="text" id="updateName" name="name" required /><br /><br />
+          <label for="updatePosition">Position:</label>
+          <input
+            type="text"
+            id="updatePosition"
+            name="position"
+            required
+          /><br /><br />
+          <div class="genders">
+            <label for="updateGender">Gender:</label>
+            <input
+              type="radio"
+              id="updateMale"
+              name="gender"
+              value="Male"
+              required
+            />
+            <label for="updateMale">Male</label>
+            <input
+              type="radio"
+              id="updateFemale"
+              name="gender"
+              value="Female"
+              required
+            />
+            <label for="updateFemale">Female</label><br /><br />
+          </div>
+
+          <label for="updatePay">Pay:</label>
+          <input type="number" id="updatePay" name="pay" required /><br /><br />
+          <label for="updateFullTime">Full-Time:</label>
+          <input
+            type="checkbox"
+            id="updateFullTime"
+            name="fullTime"
+          /><br /><br />
+          <label for="updatePhoto">Photo URL:</label>
+          <input
+            type="url"
+            id="updatePhoto"
+            name="photo"
+            required
+          /><br /><br />
+          <input type="submit" value="Update" style="width: 50%" />
+        </form>
+      </div>
+    </div>
+    <div class="navigation">
+      <h2 id="logo">Team<span style="color: #81ce9c">Ease.</span></h2>
+      <ul id="navBar">
+        <a href="dashboard.html"><li>DashBoard</li></a>
+        <a href="main.html"
+          ><li style="color: #81ce9c">Employee Management</li></a
+        >
+        <a href="secondary.html"><li>Donate</li></a>
+      </ul>
+      <div class="profileSection">
+        <h3 style="font-family: 'Inter'">Admin</h3>
+        <button
+          onclick="logoutFunction()"
+          class="logOutButton"
+          style="color: black"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+    <div class="search-filter">
+      <input
+        type="text"
+        id="searchInput"
+        onkeyup="searchEmployee()"
+        placeholder="Search by Name"
+      />
+      <select id="filterPosition" onchange="filterEmployee()">
+        <option value="">Filter by Position</option>
+        <option value="Manager">Manager</option>
+        <option value="Assistant Manager">Assistant Manager</option>
+        <option value="Designer">Designer</option>
+        <option value="Accountant">Accountant</option>
+        <option value="HR Manager">HR Manager</option>
+        <option value="Software Engineer">Software Engineer</option>
+        <option value="Financial Analyst">Financial Analyst</option>
+        <option value="Marketing Manager">Marketing Manager</option>
+      </select>
+      <select id="filterGender" onchange="filterEmployee()">
+        <option value="">Filter by Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+      <button onclick="openModal()" id="buttonAdd" style="color: white">
+        Add Employee
+      </button>
+    </div>
+
+    <div class="employee">
+      <h2>Employee List</h2>
+      <table id="employeeTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Gender</th>
+            <th>Pay</th>
+            <th>Full Time</th>
+            <th>Photo</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-id="1">
+            <td>John Doe</td>
+            <td>Manager</td>
+            <td>Male</td>
+            <td>₱50000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/1.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('John Doe', 'Manager', 'Male', '₱50000', 1)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+          <tr data-id="2">
+            <td>Jane Smith</td>
+            <td>Assistant Manager</td>
+            <td>Female</td>
+            <td>₱45000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/2.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Jane Smith', 'Assistant Manager', 'Female', '₱45000', 2)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+
+          <tr data-id="3">
+            <td>Michael Johnson</td>
+            <td>Developer</td>
+            <td>Male</td>
+            <td>₱60000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/3.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Michael Johnson', 'Developer', 'Male', '₱60000', 3)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+
+          <tr data-id="4">
+            <td>Emily Brown</td>
+            <td>Designer</td>
+            <td>Female</td>
+            <td>₱55000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/4.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Emily Brown', 'Designer', 'Female', '₱55000', 4)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+
+          <tr data-id="5">
+            <td>David Lee</td>
+            <td>Accountant</td>
+            <td>Male</td>
+            <td>₱48000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/5.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('David Lee', 'Accountant', 'Male', '₱48000', 5)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+
+          <tr data-id="6">
+            <td>Sarah Wilson</td>
+            <td>HR Manager</td>
+            <td>Female</td>
+            <td>₱52000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/6.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Sarah Wilson', 'HR Manager', 'Female', '₱52000', 6)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+
+          <tr data-id="7">
+            <td>Mark Johnson</td>
+            <td>Software Engineer</td>
+            <td>Male</td>
+            <td>₱65000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/7.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Mark Johnson', 'Software Engineer', 'Male', '₱65000', 7)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+
+          <tr data-id="8">
+            <td>Linda Smith</td>
+            <td>Financial Analyst</td>
+            <td>Female</td>
+            <td>₱60000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/8.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Linda Smith', 'Financial Analyst', 'Female', '₱60000', 8)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+
+          <tr data-id="9">
+            <td>James Brown</td>
+            <td>Marketing Manager</td>
+            <td>Male</td>
+            <td>₱70000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/9.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('James Brown', 'Marketing Manager', 'Male', '₱70000', 9)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+          <tr data-id="10">
+            <td>Emma White</td>
+            <td>HR Assistant</td>
+            <td>Female</td>
+            <td>₱40000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/10.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Emma White', 'HR Assistant', 'Female', '₱40000', 10)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+
+          <tr data-id="11">
+            <td>Adam Smith</td>
+            <td>Project Manager</td>
+            <td>Male</td>
+            <td>₱75000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/11.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Adam Smith', 'Project Manager', 'Male', '₱75000', 11)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+
+          <tr data-id="12">
+            <td>Laura Johnson</td>
+            <td>Customer Service Representative</td>
+            <td>Female</td>
+            <td>₱38000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/12.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Laura Johnson', 'Customer Service Representative', 'Female', '₱38000', 12)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+
+          <tr data-id="13">
+            <td>Kevin Brown</td>
+            <td>IT Support Specialist</td>
+            <td>Male</td>
+            <td>₱55000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/13.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Kevin Brown', 'IT Support Specialist', 'Male', '₱55000', 13)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+
+          <tr data-id="14">
+            <td>Olivia Miller</td>
+            <td>Graphic Designer</td>
+            <td>Female</td>
+            <td>₱48000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/14.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Olivia Miller', 'Graphic Designer', 'Female', '₱48000', 14)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+          <tr data-id="15">
+            <td>Chris Wilson</td>
+            <td>Sales Manager</td>
+            <td>Male</td>
+            <td>₱70000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/15.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Chris Wilson', 'Sales Manager', 'Male', '₱70000', 15)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+          <tr data-id="16">
+            <td>Julia Davis</td>
+            <td>Marketing Coordinator</td>
+            <td>Female</td>
+            <td>₱42000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/16.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Julia Davis', 'Marketing Coordinator', 'Female', '₱42000', 16)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+          <tr data-id="17">
+            <td>Robert Harris</td>
+            <td>Financial Advisor</td>
+            <td>Male</td>
+            <td>₱68000</td>
+            <td>Yes</td>
+            <td>
+              <img
+                src="/employee-images/17.jpg"
+                alt="Employee Photo"
+                class="employee-image"
+              />
+            </td>
+            <td>
+              <button
+                onclick="addToPromotionList('Robert Harris', 'Financial Advisor', 'Male', '₱68000', 17)"
+              >
+                Add to Promotion
+              </button>
+              <button onclick="deleteEmployee(this)">Delete</button>
+              <button onclick="viewEmployee(this)">View</button>
+              <button onclick="populateUpdateForm(this)">Update</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="promotion">
+      <h2>Candidates for Promotion</h2>
+      <table id="promotionTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Gender</th>
+            <th>Pay</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="viewModal" class="modal">
+      <div class="modal-content" style="width: 30%">
+        <span class="close" onclick="closeViewModal()">&times;</span>
+        <h2 style="text-align: center; font-family: 'Inter'">
+          <span style="color: #81ce9c">Employee</span> Profile
+        </h2>
+        <div
+          id="employeeProfile"
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter';
+          "
+        ></div>
+      </div>
+    </div>
+    <script src="/scripts/main.js"></script>
+  </body>
+</html>

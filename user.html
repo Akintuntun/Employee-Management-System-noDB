@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styleMain.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body
+    style="
+      background-image: url(/images/bg6.jpg);
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    "
+  >
+    <div class="navigation">
+      <h2 id="logo">Team<span style="color: #81ce9c">Ease.</span></h2>
+      <ul id="navBar">
+        <a href="user.html"><li style="color: #81ce9c">DashBoard</li></a>
+        <a href="userSecondary.html"><li>Donate</li></a>
+      </ul>
+      <div class="profileSection">
+        <h3 style="font-family: 'Inter'">Employee</h3>
+        <button onclick="logoutFunction()" class="logOutButton">Logout</button>
+      </div>
+    </div>
+    <div class="mainContainer">
+      <h1 style="font-family: 'Inter'">Dashboard</h1>
+      <div class="analysis item">
+        <div class="numbers">
+          <p>Number of Employee</p>
+          <h1>102 Employees</h1>
+          <p>Up to Date</p>
+        </div>
+        <div class="numbers">
+          <p>Current Open Position</p>
+          <h1>20 Positions</h1>
+          <p>Up to Date</p>
+        </div>
+        <div class="numbers">
+          <p>Employee Turnover Rate</p>
+          <h1>12%</h1>
+          <p>Up to Date</p>
+        </div>
+      </div>
+      <div class="Images item" style="padding-bottom: 50px">
+        <div class="pictureTable">
+          <img src="/images/grap2.png" alt="" />
+        </div>
+        <div class="pictureTable">
+          <img src="/images/grap1.png" alt="" />
+        </div>
+      </div>
+    </div>
+    <script src="/scripts/script.js"></script>
+  </body>
+</html>

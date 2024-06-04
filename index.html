@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Employee Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="modal" style="display: none">
+      <div class="modalContents">
+        <form id="loginForm">
+          <div class="labelModal">
+            <h2 style="margin: 0; font-family: CustomFont">
+              Team<span style="color: #81ce9c; font-family: 'CustomFont'"
+                >Ease.</span
+              >
+            </h2>
+            <p style="margin: 0">Employee Manager</p>
+          </div>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required />
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+          <div class="passShow">
+            <input type="checkbox" id="showPassword" />
+            <label for="showPassword">Show password</label>
+          </div>
+          <button type="button" onclick="loginFunction()">Login</button>
+        </form>
+      </div>
+    </div>
+    <div class="mainContainer">
+      <div class="navigation">
+        <h2 id="logo">Team<span style="color: #81ce9c">Ease.</span></h2>
+        <ul id="navBar">
+          <a href="#section1"><li>Home</li></a>
+          <a href="#section2"><li>About</li></a>
+          <a href="#section3"><li>Intructor</li></a>
+          <a href="#section4"><li>Team Members</li></a>
+        </ul>
+      </div>
+      <div class="firsContent" id="section1">
+        <div class="partText">
+          <h1 id="heading" style="margin: 0">Manage Your Team with Ease</h1>
+          <p id="subHeading">
+            Unlocking Efficiency and Engagement: Harness the Power of TeamEase
+            to Streamline Workforce Management and Empower Your Team for Success
+          </p>
+          <button id="buttonSign" onclick="openModal()" style="color: black">
+            SIGN IN
+          </button>
+        </div>
+        <div class="slanted-container">
+          <img src="images/CedieLanding.png" alt="" id="sideImage" />
+        </div>
+      </div>
+      <div class="secondContent" id="section2">
+        <div class="appLabel">
+          <h1>Simplify Employee Management with TeamEase</h1>
+          <p id="longDesc">
+            Want to simplify employee management? Team Ease has you covered with
+            its intuitive application and website, ensuring effortless
+            organization, enhanced communication, and boosted productivity for
+            your team.
+          </p>
+        </div>
+        <div class="cardsContent">
+          <div class="card">
+            <i class="fa-solid fa-list-check"></i>
+            <h1>Effortless Organization:</h1>
+            <p>
+              Our intuitive application and website offer streamlined solutions
+              for easy organization of tasks, schedules, and communication.
+            </p>
+          </div>
+          <div class="card">
+            <i class="fa-solid fa-comment"></i>
+            <h1>Enhanced Communication:</h1>
+            <p>
+              Stay connected with your team like never before. TeamEase provides
+              a centralized platform for efficient communication, ensuring
+              everyone is on the same page and productivity soars.
+            </p>
+          </div>
+          <div class="card">
+            <i class="fa-solid fa-rocket"></i>
+            <h1>Effortless Organization:</h1>
+            <p>
+              Drive productivity to new heights with TeamEase. Our user-friendly
+              tools empower your team to work smarter, not harder, leading to
+              enhanced efficiency and achievement of goals.
+            </p>
+          </div>
+          <div class="card">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h1>Secure and Reliable:</h1>
+            <p>
+              Trust TeamEase for a safe and dependable employee management
+              experience. With robust security measures in place, your data is
+              protected, and your team can focus on what matters most—getting
+              the job done.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="thirdContent" id="section3">
+        <div class="intructor">
+          <img src="/images/Sir.jpg" alt="" id="sirNorris" />
+          <div id="divOverlay"></div>
+        </div>
+        <div class="intructorContents" style="color: white">
+          <h1>About the <span style="color: #81ce9c">Instructor</span></h1>
+          <p>
+            Norris Alexis Panganiban Amora is a dedicated academic and
+            technologist currently pursuing a Master of Information Technology
+            (MIT) at the University of the Philippines Los Baños (UPLB). He
+            holds a Bachelor of Science in Computer Science (BSCS) from STI
+            College San Pablo. As a college instructor, Norris imparts his
+            extensive knowledge and passion for computer science to his
+            students, contributing to the development of future tech
+            professionals.
+          </p>
+          <h4>
+            Name:
+            <span class="placeHolder">Norris Alexis Panganiban Amora</span>
+          </h4>
+          <h4>
+            Social Media:
+            <span class="placeHolder"
+              ><a
+                href="https://www.facebook.com/norris.amora"
+                style="text-decoration: none; color: rgb(185, 185, 185)"
+                >https://www.facebook.com/norris.amora</a
+              ></span
+            >
+          </h4>
+          <h4>
+            Birthday:
+            <span class="placeHolder">April 17 19**</span>
+          </h4>
+          <h4>
+            Zip Code:
+            <span class="placeHolder">4000</span>
+          </h4>
+        </div>
+      </div>
+      <div class="fourthContent" id="section4">
+        <h1 id="teamLabel" style="color: white">Team Members</h1>
+        <div class="wrapper">
+          <i id="left" class="fa-solid fa-angle-left"></i>
+          <ul class="carousel">
+            <li class="card">
+              <div class="img">
+                <img
+                  src="images/aeron-minion.jpg"
+                  alt="img"
+                  draggable="false"
+                />
+              </div>
+              <h2>Aeron Atanante</h2>
+              <span>Developer</span>
+            </li>
+            <li class="card">
+              <div class="img">
+                <img src="images/jl.jpg" alt="img" draggable="false" />
+              </div>
+              <h2>John Lawrence Arandela</h2>
+              <span>Documents</span>
+            </li>
+            <li class="card">
+              <div class="img">
+                <img src="images/clarence.jpg" alt="img" draggable="false" />
+              </div>
+              <h2>John Clarence Belarmino</h2>
+              <span>Wireframe</span>
+            </li>
+            <li class="card">
+              <div class="img">
+                <img
+                  src="images/cedie-minion.jpg"
+                  alt="img"
+                  draggable="false"
+                />
+              </div>
+              <h2>Manny Cedric Boringot</h2>
+              <span>Photo Editor</span>
+            </li>
+            <li class="card">
+              <div class="img">
+                <img src="images/neil.jpeg" alt="img" draggable="false" />
+              </div>
+              <h2>Neil John Romo</h2>
+              <span>Wireframe</span>
+            </li>
+          </ul>
+          <i id="right" class="fa-solid fa-angle-right"></i>
+        </div>
+      </div>
+    </div>
+    <script src="/scripts/script.js"></script>
+  </body>
+</html>
