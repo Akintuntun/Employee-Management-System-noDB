@@ -14,6 +14,10 @@ function openAddCampaignModal() {
   modal.style.display = "block";
 }
 
+function logoutFunction() {
+  window.location.replace("index.html");
+}
+
 function closeAddCampaignModal() {
   var modal = document.getElementById("addCampaignModal");
   modal.style.display = "none";

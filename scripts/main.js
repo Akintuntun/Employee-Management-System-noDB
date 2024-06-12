@@ -1,14 +1,13 @@
-// Open and close modal functions
 function openModal() {
   var modal = document.getElementById("myModal");
   modal.style.display = "block";
-  modal.classList.add("active"); // Add active class to enable scrolling
+  modal.classList.add("active");
 }
 
 function closeModal() {
   var modal = document.getElementById("myModal");
   modal.style.display = "none";
-  modal.classList.remove("active"); // Remove active class to disable scrolling
+  modal.classList.remove("active");
 }
 
 function openUpdateModal() {
@@ -93,15 +92,16 @@ function addEmployee() {
 function deleteEmployee(button) {
   var row = button.parentNode.parentNode;
   var id = row.getAttribute("data-id");
+
   row.parentNode.removeChild(row);
 
   var promotionTable = document.getElementById("promotionTable");
-  var rows = promotionTable.getElementsByTagName("tr");
+  var promotionRows = promotionTable.getElementsByTagName("tr");
 
-  for (var i = 0; i < rows.length; i++) {
-    var rowId = rows[i].getAttribute("data-id");
-    if (rowId && parseInt(rowId) === parseInt(id)) {
-      rows[i].parentNode.removeChild(rows[i]);
+  for (var i = 0; i < promotionRows.length; i++) {
+    var promotionRowId = promotionRows[i].getAttribute("data-id");
+    if (promotionRowId && parseInt(promotionRowId) === parseInt(id)) {
+      promotionRows[i].parentNode.removeChild(promotionRows[i]);
       break;
     }
   }
@@ -237,6 +237,20 @@ function updateEmployee() {
     row.cells[4].innerHTML = fullTime;
     row.cells[5].innerHTML =
       '<img src="' + photo + '" class="employee-image" alt="Employee Photo">';
+
+    var promotionTable = document.getElementById("promotionTable");
+    var promotionRows = promotionTable.getElementsByTagName("tr");
+
+    for (var i = 0; i < promotionRows.length; i++) {
+      var promotionRowId = promotionRows[i].getAttribute("data-id");
+      if (promotionRowId && parseInt(promotionRowId) === parseInt(id)) {
+        promotionRows[i].cells[0].innerHTML = name;
+        promotionRows[i].cells[1].innerHTML = position;
+        promotionRows[i].cells[2].innerHTML = gender;
+        promotionRows[i].cells[3].innerHTML = "₱" + pay;
+        break;
+      }
+    }
 
     alert("Employee updated successfully!");
 
